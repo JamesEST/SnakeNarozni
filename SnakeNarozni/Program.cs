@@ -26,6 +26,7 @@ namespace SnakeNarozni
 
             point p = new point(4, 5, '*');
             p.draw();
+            Snake snake = new Snake(p, 4, Direction.RIGHT);
             Console.ReadLine();
         }
     }
