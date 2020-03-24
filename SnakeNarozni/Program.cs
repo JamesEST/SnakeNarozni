@@ -23,10 +23,12 @@ namespace SnakeNarozni
             downLine.Drow();
             leftLine.Drow();
             rightLine.Drow();
-
+           
             point p = new point(4, 5, '*');
-            p.draw();
+        
             Snake snake = new Snake(p, 4, Direction.RIGHT);
+            snake.Drow();
+
             Console.ReadLine();
         }
     }
