@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Media;
+using WMPLib;
+using System.IO;
+using System.IO.Ports;
 
 namespace SnakeNarozni
 {
@@ -10,7 +14,8 @@ namespace SnakeNarozni
     {
         static void Main(string[] args)
         {
-            Console.SetWindowSize(80,25);
+			
+			Console.SetWindowSize(80,25);
             
             Walls walls = new Walls(80, 25);
             walls.draw();
@@ -24,6 +29,11 @@ namespace SnakeNarozni
 			point food = foodCreator.CreateFood();
 			food.draw();
 
+			Params settings = new Params();
+			Sounds sound = new Sounds(settings.GetResourceFolder());
+			sound.Play();
+
+			Sounds sound1 = new Sounds(settings.GetResourceFolder());
 			while (true)
 			{
 				if (walls.IsHit(snake) || snake.IsHitTail())
@@ -34,6 +44,8 @@ namespace SnakeNarozni
 				{
 					food = foodCreator.CreateFood();
 					food.draw();
+					sound1.PlayEat();
+
 				}
 				else
 				{
@@ -47,13 +59,18 @@ namespace SnakeNarozni
 					snake.HandleKey(key.Key);
 				}
 			}
+			sound.Stop();
 			WriteGameOver();
 			Console.ReadLine();
+	
 		}
-
-
 		static void WriteGameOver()
 		{
+			
+			Params settings = new Params();
+			Sounds sound2 = new Sounds(settings.GetResourceFolder());
+			sound2.PlayNo();
+			Random rnd = new Random();
 			int xOffset = 25;
 			int yOffset = 8;
 			Console.ForegroundColor = ConsoleColor.Red;
@@ -62,7 +79,7 @@ namespace SnakeNarozni
 			WriteText("И Г Р А    О К О Н Ч Е Н А", xOffset + 1, yOffset++);
 			yOffset++;
 			WriteText("Автор: Владислав Нарожний", xOffset + 2, yOffset++);
-			WriteText("Сделано в Эстонии", xOffset + 1, yOffset++);
+			WriteText("Сделано в Эстонии", xOffset + 5, yOffset++);
 			WriteText("============================", xOffset, yOffset++);
 		}
 
