@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace SnakeNarozni
 	class Snake : Figure
 	{
 		Direction direction;
+		public int score;
 
 		public Snake(point tail, int length, Direction _direction)
 		{
@@ -20,6 +22,7 @@ namespace SnakeNarozni
 				p.Move(i, direction);
 				pList.Add(p);
 			}
+			score = 0;
 		}
 
 		public void Move()
@@ -71,6 +74,7 @@ namespace SnakeNarozni
 			{
 				food.sym = head.sym;
 				pList.Add(food);
+				score++;
 				return true;
 			}
 			else

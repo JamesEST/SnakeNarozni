@@ -14,7 +14,9 @@ namespace SnakeNarozni
     {
         static void Main(string[] args)
         {
-			
+			Console.Write("Напиши свое имя: ");
+			string name = Console.ReadLine();
+
 			Console.SetWindowSize(80,25);
             
             Walls walls = new Walls(80, 25);
@@ -60,11 +62,11 @@ namespace SnakeNarozni
 				}
 			}
 			sound.Stop();
-			WriteGameOver();
+			WriteGameOver(name, snake.score);
 			Console.ReadLine();
 	
 		}
-		static void WriteGameOver()
+		static void WriteGameOver(string name, int score)
 		{
 			
 			Params settings = new Params();
@@ -80,7 +82,14 @@ namespace SnakeNarozni
 			yOffset++;
 			WriteText("Автор: Владислав Нарожний", xOffset + 2, yOffset++);
 			WriteText("Сделано в Эстонии", xOffset + 5, yOffset++);
+			WriteText("   Ваш результат: " + score, xOffset + 2, yOffset++);
 			WriteText("============================", xOffset, yOffset++);
+			Console.WriteLine(score);
+			using (var file = new StreamWriter("score.txt", true))
+			{
+				file.WriteLine("Name: " + name + " | Score:" + score);
+				file.Close();
+			}
 		}
 
 		static void WriteText(String text, int xOffset, int yOffset)
