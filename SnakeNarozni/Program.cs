@@ -19,7 +19,7 @@ namespace SnakeNarozni
 			Console.Write("Напиши свое имя: ");
 			string name = Console.ReadLine();
 
-			Console.SetWindowSize(80,25);
+			Console.SetWindowSize(80, 27);
             
             Walls walls = new Walls(80, 25);
             walls.draw();
@@ -29,13 +29,15 @@ namespace SnakeNarozni
 			Snake snake = new Snake(p, 4, Direction.RIGHT);
 			snake.Drow();
 
-			FoodCreator foodCreator = new FoodCreator(80, 25, '$');
+			FoodCreator foodCreator = new FoodCreator(80, 25, '@');
 			point food = foodCreator.CreateFood();
 			food.draw();
 
 			Params settings = new Params();
 			Sounds sound = new Sounds(settings.GetResourceFolder());
 			sound.Play();
+
+			
 
 			Sounds sound1 = new Sounds(settings.GetResourceFolder());
 			while (true)
@@ -46,6 +48,8 @@ namespace SnakeNarozni
 				}
 				if (snake.Eat(food))
 				{
+					Score ScoreGame = new Score();
+					ScoreGame.ScoreInGame(snake.score);
 					food = foodCreator.CreateFood();
 					food.draw();
 					sound1.PlayEat();
